@@ -1,0 +1,18 @@
+{
+  "name": "lecointre",
+  "version": "1.0.0",
+  "description": "Check Lecointre balance",
+  "main": "index.js",
+  "repository": "https://github.com/corenting/lecointre",
+  "author": "corenting",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "puppeteer": "^1.14.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
+}
