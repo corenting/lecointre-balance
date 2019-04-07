@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const fetch = require('node-fetch');
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
   const page = await browser.newPage();
 
   page.setViewport({ width: 1920, height: 1080 });
