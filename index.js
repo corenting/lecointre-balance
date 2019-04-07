@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
-
-require('dotenv').config();
+const fetch = require('node-fetch');
 
 (async () => {
   const browser = await puppeteer.launch();
@@ -31,8 +30,23 @@ require('dotenv').config();
     page.waitForNavigation(),
   ]);
 
-  const text = await page.$eval('input#A24', elt => elt.value);
-  console.log(text);
+  const balance = await page.$eval('input#A24', elt => elt.value);
+
+  // Send to telegram
+  await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_KEY}/sendMessage`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      chat_id: process.env.TELEGRAM_USER,
+      disable_web_page_preview: true,
+      parse_mode: 'markdown',
+      text: `*Lecointre*
+      Balance: ${balance}`,
+    }),
+  });
 
   await browser.close();
 })();
