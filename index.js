@@ -39,7 +39,15 @@ const fetch = require('node-fetch');
   ]);
 
   console.log('Getting balance');
-  const balance = await page.$eval('input#A24', elt => elt.value);
+  const balanceString = await page.$eval('input#A24', elt => elt.value);
+  const balance = parseFloat(balanceString.replace(',', '.'));
+
+  // Exit early if balance is more than 20€
+  if (balance > 20) {
+    console.log(`Balance at ${balanceString}, not sending notification`);
+    await browser.close();
+    return;
+  }
 
   // Send to telegram
   console.log('Sending balance to Telegram');
@@ -53,7 +61,7 @@ const fetch = require('node-fetch');
       chat_id: process.env.TELEGRAM_USER,
       disable_web_page_preview: true,
       parse_mode: 'markdown',
-      text: `*Lecointre*\nBalance: ${balance}`,
+      text: `*Lecointre*\nBalance: ${balanceString}`,
     }),
   });
 
