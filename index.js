@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const fetch = require('node-fetch');
 
-(async () => {
+async function check() {
   console.log('Launching puppeteer');
   const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
   const page = await browser.newPage();
@@ -66,4 +66,20 @@ const fetch = require('node-fetch');
   });
 
   await browser.close();
+}
+
+(async () => {
+  let count = 0;
+  const maxTries = 3;
+  while (true) {
+    try {
+      console.log(`Try ${count + 1}/${maxTries}`);
+      await check();
+      break;
+    } catch (err) {
+      console.log(err);
+      count += 1;
+      if (count === maxTries) throw err;
+    }
+  }
 })();

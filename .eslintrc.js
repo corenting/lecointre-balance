@@ -13,6 +13,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'no-console': 'off'
+    'no-console': 'off',
+    'no-await-in-loop': 'off'
   },
 };
