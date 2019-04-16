@@ -1,6 +1,24 @@
 const puppeteer = require('puppeteer');
 const fetch = require('node-fetch');
 
+async function sendNotification(balanceText) {
+  // Send to telegram
+  console.log('Sending balance to Telegram');
+  await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_KEY}/sendMessage`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      chat_id: process.env.TELEGRAM_USER,
+      disable_web_page_preview: true,
+      parse_mode: 'markdown',
+      text: `*Lecointre*\nBalance: ${balanceText}`,
+    }),
+  });
+}
+
 async function check() {
   console.log('Launching puppeteer');
   const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
@@ -42,29 +60,14 @@ async function check() {
   const balanceString = await page.$eval('input#A24', elt => elt.value);
   const balance = parseFloat(balanceString.replace(',', '.'));
 
-  // Exit early if balance is more than 20€
-  if (balance > 20) {
+  // Exit early if balance is more than 25€
+  if (balance > 25) {
     console.log(`Balance at ${balanceString}, not sending notification`);
     await browser.close();
     return;
   }
 
-  // Send to telegram
-  console.log('Sending balance to Telegram');
-  await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_KEY}/sendMessage`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      chat_id: process.env.TELEGRAM_USER,
-      disable_web_page_preview: true,
-      parse_mode: 'markdown',
-      text: `*Lecointre*\nBalance: ${balanceString}`,
-    }),
-  });
-
+  sendNotification(balanceString);
   await browser.close();
 }
 
