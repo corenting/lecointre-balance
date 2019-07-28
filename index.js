@@ -72,6 +72,15 @@ async function check() {
 }
 
 (async () => {
+
+  // Check if it's a week day
+  let dayOfTheWeek = (new Date()).getDay()
+  if (dayOfTheWeek === 0 || dayOfTheWeek === 6) {
+    console.log('Weekend day, not executing')
+    return
+  }
+
+  // Run the check function with 3 tries
   let count = 0;
   const maxTries = 3;
   while (true) {
