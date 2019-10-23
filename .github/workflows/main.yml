@@ -8,6 +8,6 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: corentingarcia/mebede-cloud
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        name: corentingarcia/lecointre-balance
+        username: corentingarcia
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
