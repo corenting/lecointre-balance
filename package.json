@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "node-fetch": "^2.3.0",
-    "puppeteer": "^1.14.0"
+    "puppeteer": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
