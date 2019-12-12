@@ -25,4 +25,4 @@ RUN npm i \
 # Run everything after as non-privileged user.
 USER pptruser
 
-CMD ["google-chrome-unstable"]
+CMD ["node", "index.js"]
