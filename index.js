@@ -57,7 +57,7 @@ async function check() {
   ]);
 
   console.log('Getting balance');
-  const balanceString = await page.$eval('input#A24', elt => elt.value);
+  const balanceString = await page.$eval('input#A24', (elt) => elt.value);
   const balance = parseFloat(balanceString.replace(',', '.'));
 
   // Exit early if balance is more than 25€
@@ -71,13 +71,12 @@ async function check() {
   await browser.close();
 }
 
-(async () => {
-
+async function main() {
   // Check if it's a week day
-  let dayOfTheWeek = (new Date()).getDay()
+  const dayOfTheWeek = (new Date()).getDay();
   if (dayOfTheWeek === 0 || dayOfTheWeek === 6) {
-    console.log('Weekend day, not executing')
-    return
+    console.log('Weekend day, not executing');
+    return;
   }
 
   // Run the check function with 3 tries
@@ -93,5 +92,13 @@ async function check() {
       count += 1;
       if (count === maxTries) throw err;
     }
+  }
+}
+
+(async () => {
+  try {
+    await main();
+  } catch (error) {
+    console.error(error);
   }
 })();
