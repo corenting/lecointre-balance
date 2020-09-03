@@ -11,8 +11,12 @@ jobs:
         name: corentingarcia/lecointre-balance
         username: corentingarcia
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
-    - name: Publish to Github Registry
-      uses: matootie/github-docker@v2.0.0
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v1.1.0
       with:
-        accessToken: ${{ secrets.GITHUB_TOKEN }}
-        username: corenting
+        username: corentingarcia
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        repository: corentingarcia/lecointre-balance
+        tag_with_ref: true
+        add_git_labels: true
+        push: ${{ github.ref == 'refs/heads/master' }}
