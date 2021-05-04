@@ -21,7 +21,7 @@ async function sendNotification(balanceText) {
 
 async function check() {
   console.log('Launching puppeteer');
-  const browser = await puppeteer.launch({ executablePath: 'google-chrome-unstable' });
+  const browser = await puppeteer.launch({ executablePath: 'google-chrome-stable' });
   const page = await browser.newPage();
 
   console.log('Loading website');
