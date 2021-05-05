@@ -1,8 +1,12 @@
 const puppeteer = require('puppeteer');
 const fetch = require('node-fetch');
 
+/**
+ * Send notification to Telegram
+ *
+ * @param {string} balanceText The balance amount as text to include in the message.
+ */
 async function sendNotification(balanceText) {
-  // Send to telegram
   console.log('Sending balance to Telegram');
   await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_KEY}/sendMessage`, {
     method: 'POST',
@@ -19,6 +23,10 @@ async function sendNotification(balanceText) {
   });
 }
 
+/**
+ * Check balance amount on the website
+ *
+ */
 async function check() {
   console.log('Launching puppeteer');
   const browser = await puppeteer.launch({ executablePath: 'google-chrome-stable' });
@@ -71,6 +79,10 @@ async function check() {
   await browser.close();
 }
 
+/**
+ * Main entrypoint
+ *
+ */
 async function main() {
   // Check if it's a week day
   const dayOfTheWeek = (new Date()).getDay();
