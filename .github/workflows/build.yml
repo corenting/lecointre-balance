@@ -21,3 +21,4 @@ jobs:
           context: .
           platforms: linux/amd64
           push: ${{ github.ref == 'refs/heads/master' }}
+          tags: corentingarcia/lecointre-balance:latest
